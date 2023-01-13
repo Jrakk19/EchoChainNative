@@ -4,6 +4,8 @@ import { View, StyleSheet } from 'react-native';
 import Login from './Views/Login/Login';
 import Registration from './Views/Registration/Registration';
 import AsyncStorage from '@react-native-community/async-storage';
+import CreateOrJoinGame from './Views/Game/CreateOrJoinGame';
+import Lobby from './Views/Game/Lobby';
 
 const App = () => {
 
@@ -18,7 +20,7 @@ const App = () => {
       console.log('Is logged in: ' + isLoggedIn)
       if (loggedIn === 'true') {
         setIsLoggedIn(true);
-        setCurrentView('register')
+        setCurrentView('lobby');
       }else{
         setIsLoggedIn(false);
         setCurrentView('home')
@@ -48,6 +50,10 @@ const App = () => {
         );
       case 'register':
         return <Registration handleRegisterUser={handleRegisterUser}/>;
+      case 'create_or_join':
+        return <CreateOrJoinGame />;
+      case 'lobby':
+        return <Lobby />;
       default:
         return <HomePage />;
     }
@@ -61,6 +67,7 @@ const App = () => {
 
     setCurrentView('home');
   };
+
 
   const handleLoginUser = async() => {
     console.log('Login user');

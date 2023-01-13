@@ -19,7 +19,7 @@ const Login = ({ handleLoginUser }) => {
         placeholder="Password"
         secureTextEntry={true}
       />
-      <Button title="Login" onPress={handleLoginUser} tintColor={'white'} color={'#4ED14B'}/>
+      <Button style={styles.button} title="Login" onPress={handleLoginUser} />
     </View>
     );
 };
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     button: {
-        color: 'red'
+        color: 'red',
+        width: '100%'
     },
     title: {
         marginBottom: '20%'
