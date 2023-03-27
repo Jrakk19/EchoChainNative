@@ -6,21 +6,37 @@ import Registration from './Views/Registration/Registration';
 import AsyncStorage from '@react-native-community/async-storage';
 import CreateOrJoinGame from './Views/Game/CreateOrJoinGame';
 import Lobby from './Views/Game/Lobby';
+import { Pusher } from '@pusher/pusher-websocket-react-native';
+import GuessPage from './Views/Game/GuessPage';
+import JoinGame from './Views/Game/JoinGame';
+import PromptPage from './Views/Game/Prompt';
+import { getPlayerInfo } from './APIMethods/PlayerRequests/PlayerAPI';
+import { createRoom, getRoomByCode } from './APIMethods/RoomRequests/RoomAPI';
+import { login } from './APIMethods/UserRequests/UserAPI';
+import DisplayNameForm from './Views/Game/DisplayNameForm';
+import { initializeGame } from './APIMethods/RoomRequests/RoomAPI';
+import LoadingPage from './Views/Components/LoadingPage';
+import PromptForm from './Views/Game/PromptForm';
+
+const REFRESH_INTERVAL = 60000;
 
 const App = () => {
-
+ 
   const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [user, setUser] = useState(null);
+  const [player, setPlayer] = useState(null);
   const [currentView, setCurrentView] = useState('home');
+  const [room, setRoom] = useState(null);
 
   useEffect(() => {
+
+    player !== null ? console.log(player) : setPlayer(async() => await getPlayerInfo('75c34d43-15ce-48b4-9455-05077542e0a3'))
     const checkLoggedIn = async() => {
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
       console.log(loggedIn);
       console.log('Is logged in: ' + isLoggedIn)
       if (loggedIn === 'true') {
         setIsLoggedIn(true);
-        setCurrentView('lobby');
+        setCurrentView('create_or_join');
       }else{
         setIsLoggedIn(false);
         setCurrentView('home')
@@ -48,17 +64,67 @@ const App = () => {
             }}
           />
         );
+
       case 'register':
         return <Registration handleRegisterUser={handleRegisterUser}/>;
       case 'create_or_join':
-        return <CreateOrJoinGame />;
+        return <CreateOrJoinGame handleCreateGame={handleCreateGameView} handleJoinGame={handleJoinGameView} />;
       case 'lobby':
-        return <Lobby />;
-      default:
+        return <Lobby handleStartGame={handleStartGame} room = {room} handleNavigation={setCurrentView}/>;
+      case 'join_game':
+        return <JoinGame handleJoinGame={handleJoinGame}/>;
+      case 'prompt': 
+        return <PromptPage prompt = {'cry'} handleNavigation ={setCurrentView}/>;
+      case 'guess':
+        return <GuessPage handleNavigation ={setCurrentView} player = {player}/>;
+      case 'displayName':
+        return <DisplayNameForm handleNavigation = {setCurrentView} setPlayer = {setPlayer} roomCode = {room.code}/>
+      case 'loading':
+        return <LoadingPage />
+      case 'prompt_form':
+        return <PromptForm room={room} handleNavigation={setCurrentView} />
+        default:
         return <HomePage />;
     }
   };
 
+  const handleCreateGameView = async() => {
+    let room = await createRoom();
+    console.log(room)
+    setRoom(room);
+
+    setCurrentView('displayName');
+    //create room from api and set state
+    //send user to lobby of created room
+    
+  }
+
+  const handleJoinGameView = () => {
+    setCurrentView('join_game');
+    //join room from api and set state
+    //send user to lobby of joined room
+  }
+
+  const handleStartGame = () => {
+    //start game from api and set state
+    initializeGame(room.id);
+    //send user to game
+    // setTimeout(() => {
+    //   setCurrentView('lobby');
+    // }, 5000);
+  }
+  const handleJoinGame = async(roomCode) => {
+    //join room from api and set state
+    //send user to lobby of joined room
+    let roomy = await getRoomByCode(roomCode);
+
+    setRoom(roomy);
+
+    setCurrentView('displayName')
+
+    console.log(roomy)
+    console.log('Joining game: ' + roomCode);
+  }
   const handleRegisterUser = (email, password, displayName) => {
     console.log('Register user');
     console.log(email);
@@ -70,9 +136,11 @@ const App = () => {
 
 
   const handleLoginUser = async() => {
+
     console.log('Login user');
     setIsLoggedIn(true);
     AsyncStorage.setItem('isLoggedIn', 'true');
+    setCurrentView('create_or_join');
   };
 
   return (

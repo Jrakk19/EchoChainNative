@@ -1,24 +1,20 @@
-import axios from 'axios';
+const apiUrl = 'http://192.168.0.159::8080/auth'
 
-const userAPI = axios.create({
-    baseURL: 'http://localhost:3000/users',
-});
+export const login = async(username, password) => {
 
-export const registerUser = (email, password, displayName) => {
-    return userAPI.post('/register', {
-        email,
-        password,
-        displayName,
-    });
-}
-
-export const loginUser = (email, password) => {
-    return userAPI.post('/login', {
-        email,
-        password,
-    });
-}
-
-export const getUserById = (id) => {
-    return userAPI.get(`/${id}`);
+    let options = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: {
+            username: username,
+            password: password
+        }
+      };
+    let result = await fetch(`${apiUrl}/login`, options).then(response => {return response.json()})
+    
+    console.log(result);
+    
+    return result;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import  Button from "../Components/AppButton";
 
-const CreateOrJoinGame = () => {
+const CreateOrJoinGame = ({handleCreateGame, handleJoinGame}) => {
     return (
         <View style={styles.container}>
             <View style={styles.viewContainer}>
@@ -11,13 +11,13 @@ const CreateOrJoinGame = () => {
             <View style={styles.viewContainer}>
                 <Button 
                 title="Create Game" 
-                onPress={() => console.log('Create Game')}
+                onPress={() => handleCreateGame()}
                 />
             </View>
             <View style={styles.viewContainer}>
                 <Button
                 title="Join Game"
-                onPress={() => console.log('Join Game')}
+                onPress={() => handleJoinGame()}
                 />
             </View>
         </View>

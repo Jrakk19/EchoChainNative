@@ -1,4 +1,5 @@
 {
   "name": "EchoChainNative",
-  "displayName": "EchoChainNative"
+  "displayName": "EchoChainNative",
+  "icon": "./assets/appstore.png"
 }
