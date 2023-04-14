@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {StyleSheet, View} from 'react-native';
 import { TextInput, Text } from '@react-native-material/core';
 import AppButton from '../Components/AppButton';
 import { createPrompt } from '../../APIMethods/PromptRequests/PromptAPI'
-const PromptForm = ({room, handleNavigation}) => {
+import { getPlayerInfo } from '../../APIMethods/PlayerRequests/PlayerAPI';
+const PromptForm = ({room, handleNavigation, playerId, setPlayer}) => {
   //Create a text box and a button to join a game
   const [prompt, setPrompt] = React.useState('');
 
+  useEffect(async() => {
+    const updatedPlayer = await getPlayerInfo(playerId);
+    console.log('UPDATED PLAYER', updatedPlayer)
+    setPlayer(updatedPlayer);
+  },[])
   const submitPrompt = async() => {
-
-    createPrompt(prompt, room.id, 0);
-
     handleNavigation('loading');
+    setTimeout(() => {
+      createPrompt(prompt, room.id, 0, playerId);
+
+    }, 1000)
+
+    
   }
   return (
     <View style={styles.container}>

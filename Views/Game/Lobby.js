@@ -21,11 +21,11 @@ const Lobby = ({room, handleStartGame, handleNavigation}) => {
     useEffect(() => {
         const pusher = Pusher.getInstance();
 
-    const initPusher = async () => {
-      await pusher.init({
-        apiKey: 'd2348725df402f73b423',
-        cluster: 'us3',
-      });
+        const initPusher = async () => {
+            await pusher.init({
+            apiKey: 'd2348725df402f73b423',
+            cluster: 'us3',
+        });
 
       await pusher.connect();
 

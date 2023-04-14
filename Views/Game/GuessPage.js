@@ -1,18 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import AppButton from '../Components/AppButton';
 import RNFS from 'react-native-fs';
 import Sound from 'react-native-sound';
+import { TextInput } from '@react-native-material/core';
+import { makeGuess } from '../../APIMethods/GuessRequests/GuessAPI';
+import { getCurrentAudio } from '../../APIMethods/AudioRequests/AudioAPI';
 
 
 
-const GuessPage = ({handleNavigation, player}) => {
+const GuessPage = ({handleNavigation, player, gameIndex, roomId, setGameIndex}) => {
     const path = RNFS.DocumentDirectoryPath + '/test.m4a';
     const [guess, setGuess] = React.useState('');
     const [isPlaying, setIsPlaying] = React.useState(false);
+    const [audioData, setAudioData] = React.useState();
+
+    console.log('THIS IS THE GUESS PLAYER', player.id);
+    
+    useEffect(async() => {
+        const audio = await getCurrentAudio(gameIndex, player);
+
+        setAudioData(audio);
+
+        console.log('AUDIO API', audio)
+        console.log("AUDIO DATA", audioData)
+
+        setGameIndex(gameIndex + 1)
+
+    }, [])
+
+    let request = {
+        gameIndex: gameIndex - 1,
+        player: player
+      };
+      
+      const apiURL = 'http://echo-Publi-1S8K57V8SJDAW-1256388934.us-east-1.elb.amazonaws.com/recording';
+      const requestJson = JSON.stringify(request);
+      const encodedRequestJson = encodeURIComponent(requestJson);
+      const url = `${apiURL}/next-audio`;
 
     const getAndPlayAudio = async () => {
-        await RNFS.downloadFile({ fromUrl: 'http://192.168.0.159:8080/recording/28fee129-cef4-424c-b6db-056345122d67', toFile: path }).promise.then(() => {
+        await RNFS.downloadFile({ fromUrl: `${url}?request=${encodedRequestJson}` , toFile: path, method: "GET", headers: {          Accept: 'application/json',
+    } }).promise.then(() => {
             Sound.setCategory('Playback');
             const sound = new Sound(path, '', (error) => {
                 if (error) {
@@ -32,12 +61,34 @@ const GuessPage = ({handleNavigation, player}) => {
         })
         
     }
-    console.log('USER ID', player._j.id)
+
+    const submitGuess = async(guess) => {
+
+        console.log("THIS IS THE AUDIO DATA", audioData)
+        console.log('GAME INDEX', gameIndex);
+        handleNavigation('loading');
+        setTimeout(() => {
+            makeGuess(guess, roomId, gameIndex, audioData.chainId, player.id );
+
+        }, 1000)
+        
+    }
     return (
         <View style={styles.container}>
+            <View>
+                <Text style={{fontSize: 48}}>Make Your Guess</Text>
+            </View>
             <TouchableOpacity style={styles.button} onPress = {() => {getAndPlayAudio()}}>
           <Text style={{fontSize: 30}}>Listen Again</Text>
         </TouchableOpacity>
+        <TextInput 
+            value= {guess}
+            style={styles.input}
+            onChangeText={newGuess => setGuess(newGuess)}
+            placeholder="Guess"
+            /> 
+
+            <AppButton title="Submit" onPress={() => submitGuess(guess)} />
         </View>
     )
 }
@@ -64,7 +115,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderColor: 'black',
         borderWidth: 3,
-      }
+      },
+      input: {
+        width: '80%',
+        marginBottom: '10%',
+    },
 });
 
 export default GuessPage;

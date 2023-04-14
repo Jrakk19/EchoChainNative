@@ -17,6 +17,7 @@ import DisplayNameForm from './Views/Game/DisplayNameForm';
 import { initializeGame } from './APIMethods/RoomRequests/RoomAPI';
 import LoadingPage from './Views/Components/LoadingPage';
 import PromptForm from './Views/Game/PromptForm';
+import RecordAudio from './Views/Game/RecordAudio';
 
 const REFRESH_INTERVAL = 60000;
 
@@ -26,10 +27,10 @@ const App = () => {
   const [player, setPlayer] = useState(null);
   const [currentView, setCurrentView] = useState('home');
   const [room, setRoom] = useState(null);
+  const [gameIndex, setGameIndex] = useState(0);
 
   useEffect(() => {
 
-    player !== null ? console.log(player) : setPlayer(async() => await getPlayerInfo('75c34d43-15ce-48b4-9455-05077542e0a3'))
     const checkLoggedIn = async() => {
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
       console.log(loggedIn);
@@ -76,13 +77,15 @@ const App = () => {
       case 'prompt': 
         return <PromptPage prompt = {'cry'} handleNavigation ={setCurrentView}/>;
       case 'guess':
-        return <GuessPage handleNavigation ={setCurrentView} player = {player}/>;
+        return <GuessPage roomId={room.id} handleNavigation ={setCurrentView} player = {player} setGameIndex={setGameIndex} gameIndex = {gameIndex} />;
       case 'displayName':
         return <DisplayNameForm handleNavigation = {setCurrentView} setPlayer = {setPlayer} roomCode = {room.code}/>
       case 'loading':
-        return <LoadingPage />
+        return <LoadingPage roomCode={room.code} handleNavigation={setCurrentView}/>
       case 'prompt_form':
-        return <PromptForm room={room} handleNavigation={setCurrentView} />
+        return <PromptForm setPlayer={setPlayer} room={room} handleNavigation={setCurrentView} playerId={player.id}/>
+      case 'record_audio':
+        return <RecordAudio room={room} handleNavigation={setCurrentView} player = {player} gameIndex={gameIndex} />
         default:
         return <HomePage />;
     }

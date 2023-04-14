@@ -1,4 +1,4 @@
-const apiURL = 'http://192.168.0.159:8080/player'
+const apiURL = 'http://echo-Publi-1S8K57V8SJDAW-1256388934.us-east-1.elb.amazonaws.com/player'
 export const getPlayerInfo = async(playerID) => {
     let options = {
         method: 'GET',
@@ -30,7 +30,7 @@ export const createPlayer = async(displayName, roomCode) => {
             roomCode: roomCode
         })
       };
-    let result = await fetch(`${apiURL}/create`, options).then(response => {return response.json()})
+    let result = await fetch(`${apiURL}/create`, options).then((response) => {return response.json()})
 
     console.log('THIS SI THE USER',result);
 
