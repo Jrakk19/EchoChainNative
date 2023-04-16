@@ -32,6 +32,8 @@ const LoadingPage = ({roomCode, handleNavigation}) => {
             handleNavigation('prompt_form')
           }else if(event.eventName == 'record'){
             handleNavigation('record_audio')
+          }else if(event.eventName == 'end-game'){
+            handleNavigation('final-screen');
           }
         },
       });

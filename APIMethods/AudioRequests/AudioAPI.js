@@ -1,4 +1,4 @@
-const apiURL = 'http://echo-Publi-1S8K57V8SJDAW-1256388934.us-east-1.elb.amazonaws.com/recording';
+const apiURL = 'http://192.168.0.159:8080/recording';
 export const sendAudio = async (audio) => {
     console.log('we are here', audio);
     let uriParts = audio.split('.');

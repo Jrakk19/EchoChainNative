@@ -37,7 +37,7 @@ const PromptPage = ({prompt, handleNavigation}) => {
   };
   const sendAudio = async uri => {
     console.log('Uploading ' + uri);
-    let apiUrl = 'http://echo-Publi-1S8K57V8SJDAW-1256388934.us-east-1.elb.amazonaws.com/recording';
+    let apiUrl = 'http://192.168.0.159:8080/recording';
     let uriParts = uri.split('.');
     let fileType = uriParts[uriParts.length - 1];
 
