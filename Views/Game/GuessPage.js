@@ -34,7 +34,7 @@ const GuessPage = ({handleNavigation, player, gameIndex, roomId, setGameIndex}) 
         player: player
       };
       
-      const apiURL = 'http://192.168.0.159:8080/recording';
+      const apiURL = 'https://echo-chain-api.herokuapp.com/recording';
       const requestJson = JSON.stringify(request);
       const encodedRequestJson = encodeURIComponent(requestJson);
       const url = `${apiURL}/next-audio`;

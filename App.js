@@ -31,8 +31,6 @@ const App = () => {
   const [gameIndex, setGameIndex] = useState(0);
 
   useEffect(() => {
-
-    player !== null ? console.log(player) : setPlayer(async() => await getPlayerInfo('75c34d43-15ce-48b4-9455-05077542e0a3'))
     const checkLoggedIn = async() => {
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
       console.log(loggedIn);

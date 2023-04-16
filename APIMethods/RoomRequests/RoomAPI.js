@@ -1,4 +1,4 @@
-const apiUrl = 'http://192.168.0.159:8080/room'
+const apiUrl = 'https://echo-chain-api.herokuapp.com/room'
 export const createRoom = async() => {
 
     let options = {

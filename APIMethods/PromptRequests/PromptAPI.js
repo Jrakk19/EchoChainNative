@@ -1,4 +1,4 @@
-const apiUrl = 'http://192.168.0.159:8080/prompts'
+const apiUrl = 'https://echo-chain-api.herokuapp.com/prompts'
 export const createPrompt = async(prompt, roomId, gameIndex, playerId) => {
 
     console.log('VARIABLES HERE', prompt, roomId, gameIndex, playerId)

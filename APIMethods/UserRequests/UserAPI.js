@@ -1,4 +1,4 @@
-const apiUrl = 'http://192.168.0.159:8080::8080/auth'
+const apiUrl = 'https://echo-chain-api.herokuapp.com::8080/auth'
 
 export const login = async(username, password) => {
 
