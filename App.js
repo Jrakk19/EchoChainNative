@@ -83,7 +83,7 @@ const App = () => {
       case 'loading':
         return <LoadingPage roomCode={room.code} handleNavigation={setCurrentView}/>
       case 'prompt_form':
-        return <PromptForm room={room} handleNavigation={setCurrentView} playerId={player.id}/>
+        return <PromptForm setPlayer={setPlayer} room={room} handleNavigation={setCurrentView} playerId={player.id}/>
       case 'record_audio':
         return <RecordAudio room={room} handleNavigation={setCurrentView} player = {player} gameIndex={gameIndex} />
       case 'final-screen':
