@@ -8,29 +8,26 @@ import ChainBox from '../Components/ChainBox';
 import AppButton from "../Components/AppButton";
 import { getAllPlayersInGame } from "../../APIMethods/RoomRequests/RoomAPI";
 
-const FinalScreen = ({roomId}) => {
+const FinalScreen = ({roomId, handleNavigation}) => {
     const [chain, setChain] = useState([]);
     const [chainIndex, setChainIndex] = useState(0);
     const [prompt, setPrompt] = useState('');
     const [renderedChain, setRenderedChain] = useState([]);
     const [numberOfChains, setNumberOfChains] = useState(0);
     
-    const [listone, setListone] = useState(['Item 1', 'Item 2', 'Item 3']);
-    const [listtwo, setListtwo] = useState(['Item 1, 2', 'Item 2, 2', 'Item 3, 2']);
-
     useEffect(() => {
         const fetchData = async () => {
             const chainData = await getChain(roomId, chainIndex);
             console.log("CHAIN", chainData);
             setChain(chainData);
         };
-        const getNumberOfUsers = async () => {
+        const getNumberOfPlayers = async () => {
             const players = await getAllPlayersInGame(roomId);
             console.log("PLAYERS", players);
             setNumberOfChains(players.length);
         };
         fetchData();
-        getNumberOfUsers();
+        getNumberOfPlayers();
     }, []);
 
     useEffect(() => {
@@ -57,7 +54,7 @@ const FinalScreen = ({roomId}) => {
             const timeoutId = setTimeout(() => {
                 setRenderedChain((prevItems) => [...prevItems, item]);
                 console.log(renderedChain)
-            }, 2000 * (index + 1));
+            }, 3000 * (index + 1));
             timerIds.push(timeoutId);
         });
     
@@ -65,7 +62,7 @@ const FinalScreen = ({roomId}) => {
             // Clear all the timers when the component unmounts
             timerIds.forEach(clearTimeout);
         };
-    }, [chain]);
+    }, [chain, chainIndex]);
     
     const goToNextChain = () => {
         if (chainIndex + 1 < numberOfChains) {
@@ -73,6 +70,7 @@ const FinalScreen = ({roomId}) => {
             setRenderedChain([]);
         } else {
             //naviate to end screen
+            handleNavigation('end-game');
             console.log("END SCREEN")
         }
     }

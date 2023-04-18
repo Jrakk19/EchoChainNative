@@ -57,3 +57,14 @@ export const getRoomByCode = async(roomCode) => {
 
     return result;
 }
+
+export const leaveRoom = async(playerId) => {
+  let options = {
+    method:'DELETE',
+    headers: {
+      Accept: 'application/json',
+    },
+  };
+
+  await fetch(`${apiUrl}/leave-room/${playerId}`, options);
+}

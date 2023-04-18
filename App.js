@@ -19,6 +19,7 @@ import LoadingPage from './Views/Components/LoadingPage';
 import PromptForm from './Views/Game/PromptForm';
 import RecordAudio from './Views/Game/RecordAudio';
 import FinalScreen from './Views/Game/FinalScreen';
+import EndGameScreen from './Views/Game/EndGameScreen';
 
 const REFRESH_INTERVAL = 60000;
 
@@ -88,6 +89,8 @@ const App = () => {
         return <RecordAudio room={room} handleNavigation={setCurrentView} player = {player} gameIndex={gameIndex} />
       case 'final-screen':
         return <FinalScreen roomId={room.id} handleNavigation={setCurrentView} player = {player} />
+      case 'end-game':
+        return <EndGameScreen roomId={room.id} handleNavigation={setCurrentView} player = {player} />
         default:
         return <HomePage />;
     }
