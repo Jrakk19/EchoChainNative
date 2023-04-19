@@ -28,7 +28,7 @@ const FinalScreen = ({roomId, handleNavigation}) => {
         };
         fetchData();
         getNumberOfPlayers();
-    }, []);
+    }, [chainIndex]);
 
     useEffect(() => {
         if (!chain) {
