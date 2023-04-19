@@ -15,7 +15,7 @@ const JoinGame = ({handleJoinGame}) => {
         <TextInput
           style={styles.input}
           value={roomCode}
-          onChangeText={newRoomCode => setRoomCode(newRoomCode)}
+          onChangeText={newRoomCode => setRoomCode(newRoomCode.toUpperCase())}
           placeholder="Room Code"
         />
       </View>
