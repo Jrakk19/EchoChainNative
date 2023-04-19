@@ -1,4 +1,4 @@
-const apiURL = 'http://192.168.0.159:8080/player'
+const apiURL = 'https://echo-chain-api.herokuapp.com/player'
 export const getPlayerInfo = async(playerID) => {
     let options = {
         method: 'GET',

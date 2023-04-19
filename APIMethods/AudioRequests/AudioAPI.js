@@ -1,4 +1,4 @@
-const apiURL = 'http://192.168.0.159:8080/recording';
+const apiURL = 'https://echo-chain-api.herokuapp.com/recording';
 export const sendAudio = async (audio) => {
     console.log('we are here', audio);
     let uriParts = audio.split('.');

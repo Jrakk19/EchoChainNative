@@ -19,6 +19,7 @@ import LoadingPage from './Views/Components/LoadingPage';
 import PromptForm from './Views/Game/PromptForm';
 import RecordAudio from './Views/Game/RecordAudio';
 import FinalScreen from './Views/Game/FinalScreen';
+import EndGameScreen from './Views/Game/EndGameScreen';
 
 const REFRESH_INTERVAL = 60000;
 
@@ -31,8 +32,6 @@ const App = () => {
   const [gameIndex, setGameIndex] = useState(0);
 
   useEffect(() => {
-
-    player !== null ? console.log(player) : setPlayer(async() => await getPlayerInfo('75c34d43-15ce-48b4-9455-05077542e0a3'))
     const checkLoggedIn = async() => {
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
       console.log(loggedIn);
@@ -85,11 +84,13 @@ const App = () => {
       case 'loading':
         return <LoadingPage roomCode={room.code} handleNavigation={setCurrentView}/>
       case 'prompt_form':
-        return <PromptForm room={room} handleNavigation={setCurrentView} playerId={player.id}/>
+        return <PromptForm setPlayer={setPlayer} room={room} handleNavigation={setCurrentView} playerId={player.id}/>
       case 'record_audio':
         return <RecordAudio room={room} handleNavigation={setCurrentView} player = {player} gameIndex={gameIndex} />
       case 'final-screen':
         return <FinalScreen roomId={room.id} handleNavigation={setCurrentView} player = {player} />
+      case 'end-game':
+        return <EndGameScreen roomId={room.id} handleNavigation={setCurrentView} player = {player} />
         default:
         return <HomePage />;
     }

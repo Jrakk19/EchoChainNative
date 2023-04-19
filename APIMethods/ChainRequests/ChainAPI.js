@@ -1,4 +1,4 @@
-const apiURL = 'http://192.168.0.159:8080/room'
+const apiURL = 'https://echo-chain-api.herokuapp.com/room'
 
 export const getChain = (roomId, playerNumber) => {
     const requestObject = {

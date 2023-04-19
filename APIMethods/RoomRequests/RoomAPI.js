@@ -1,4 +1,4 @@
-const apiUrl = 'http://192.168.0.159:8080/room'
+const apiUrl = 'https://echo-chain-api.herokuapp.com/room'
 export const createRoom = async() => {
 
     let options = {
@@ -56,4 +56,15 @@ export const getRoomByCode = async(roomCode) => {
     console.log('THIS SI THE ROOM JOINGING',result);
 
     return result;
+}
+
+export const leaveRoom = async(playerId) => {
+  let options = {
+    method:'DELETE',
+    headers: {
+      Accept: 'application/json',
+    },
+  };
+
+  await fetch(`${apiUrl}/leave-room/${playerId}`, options);
 }

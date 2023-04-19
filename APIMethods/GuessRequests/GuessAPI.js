@@ -1,6 +1,6 @@
 import { G } from "react-native-svg";
 
-const apiURL = 'http://192.168.0.159:8080/guess'
+const apiURL = 'https://echo-chain-api.herokuapp.com/guess'
 
 export const getNextPrompt = async (gameIndex, player) => {
     const requestObject = {

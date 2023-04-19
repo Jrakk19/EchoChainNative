@@ -41,7 +41,7 @@ const RecordAudio = ({room, handleNavigation, player, gameIndex}) => {
 
     const sendAudio = async (uri) => {
         console.log("Uploading " + uri);
-  let apiUrl = 'http://192.168.0.159:8080/recording';
+  let apiUrl = 'https://echo-chain-api.herokuapp.com/recording';
   let uriParts = uri.split('.');
   let fileType = uriParts[uriParts.length - 1];
     
