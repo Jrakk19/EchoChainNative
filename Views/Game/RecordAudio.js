@@ -99,19 +99,21 @@ const submitHandler = async() => {
 }
 return (
     <View style={styles.container}>
+      <View style={styles.innerContainer}>
       <View style={styles.viewContainer}>
-        <Text style={{fontSize: 20}}>Your Prompt is: </Text>
+        <Text style={[styles.title, {fontSize: 25}]}>Your Prompt is: </Text>
       </View>
       <View style={styles.promptContainer}>
-        <Text style={styles.text}>{prompt.title}</Text>
+        <Text style={[styles.title, styles.text]}>{prompt.title}</Text>
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, , isRecording ? styles.isRecording : null]}
           onPress={() => {
             isRecording ? onStopRecord() : onStartRecord();
           }}>
-          <Text style={{fontSize: 30}}>{isRecording ? 'Stop' : 'Record'}</Text>
+          <Text style={[styles.title, {fontSize: 20}, isRecording ? styles.isRecording : null, {textShadowRadius: 1}]}>{isRecording ? 'Stop' : 'Record'}</Text>
         </TouchableOpacity>
         <AppButton title="Submit" onPress={() => submitHandler()} />
+      </View>
       </View>
     </View>
   );
@@ -121,9 +123,30 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#121212',
     width: '100%',
     height: '100%',
+  },
+  title: {
+    fontSize: 50,
+        color: '#0AFFF7',
+        textShadowColor: '#0AFFF7',
+        textShadowOffset: {width: 0, height: 0},
+        textShadowRadius: 20,
+        padding: 20
+  
+  },
+  innerContainer: {
+    flex:0.95,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    backgroundColor: '#121212',
+    shadowColor: "#0AFFF7",
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    width: '95%',
+    borderRadius: 20,
   },
   text: {
     fontSize: 60,
@@ -140,7 +163,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '80%',
-    backgroundColor: 'white',
+    backgroundColor: '#121212',
     borderRadius: 10,
   },
   button: {
@@ -150,9 +173,25 @@ const styles = StyleSheet.create({
     height: '15%',
     borderRadius: 500,
     marginTop: 20,
-    borderColor: 'black',
+    borderColor: '#0AFFF7',
     borderWidth: 3,
+    shadowColor: "#0AFFF7",
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 3,
   },
+  isRecording: {
+    borderColor: '#FF073A',
+    borderWidth: 3,
+    shadowColor: "#FF073A",
+    color: '#FF073A',
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    borderRadius: 500,
+    fontSize: 30,
+
+  }
 });
 
 export default RecordAudio;

@@ -74,7 +74,7 @@ const App = () => {
       case 'lobby':
         return <Lobby handleStartGame={handleStartGame} room = {room} handleNavigation={setCurrentView}/>;
       case 'join_game':
-        return <JoinGame handleJoinGame={handleJoinGame}/>;
+        return <JoinGame handleJoinGame={handleJoinGame} handleNavigation={setCurrentView}/>;
       case 'prompt': 
         return <PromptPage prompt = {'cry'} handleNavigation ={setCurrentView}/>;
       case 'guess':

@@ -75,20 +75,25 @@ const GuessPage = ({handleNavigation, player, gameIndex, roomId, setGameIndex}) 
     }
     return (
         <View style={styles.container}>
+            <View style={styles.innerContainer}>
             <View>
-                <Text style={{fontSize: 48}}>Make Your Guess</Text>
+                <Text style={[styles.title, {fontSize: 40}]}>Make Your Guess</Text>
             </View>
             <TouchableOpacity style={styles.button} onPress = {() => {getAndPlayAudio()}}>
-          <Text style={{fontSize: 30}}>Listen Again</Text>
+          <Text style={[styles.title, {fontSize: 25, textShadowRadius: 1}]}>Listen Again</Text>
         </TouchableOpacity>
         <TextInput 
             value= {guess}
             style={styles.input}
             onChangeText={newGuess => setGuess(newGuess)}
             placeholder="Guess"
+            variant='standard'
+          color='#0AFFF7'
+          inputStyle={{color: '#0AFFF7'}}
             /> 
 
             <AppButton title="Submit" onPress={() => submitGuess(guess)} />
+            </View>
         </View>
     )
 }
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "space-evenly",
-        backgroundColor: 'white',
+        backgroundColor: '#121212',
         width: '100%',
     },
     viewContainer: {
@@ -106,20 +111,56 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    innerContainer: {
+        flex:0.95,
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        backgroundColor: '#121212',
+        shadowColor: "#0AFFF7",
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        width: '95%',
+        borderRadius: 20,
+      },
     button: {
         justifyContent: 'center',
-        alignItems: 'center',
-        width: '30%',
-        height: '15%',
-        borderRadius: 500,
-        marginTop: 20,
-        borderColor: 'black',
-        borderWidth: 3,
+    alignItems: 'center',
+    width: '30%',
+    height: '15%',
+    borderRadius: 500,
+    marginTop: 20,
+    borderColor: '#0AFFF7',
+    borderWidth: 3,
+    shadowColor: "#0AFFF7",
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 3,
       },
       input: {
         width: '80%',
-        marginBottom: '10%',
+    marginBottom: '10%',
+    backgroundColor: '#121212', 
+    borderColor: '#0AFFF7', 
+    borderWidth: 1, 
+    borderRadius: 10, 
+    color: '#0AFFF7', 
+    paddingHorizontal: 10, 
+    shadowColor: "#0AFFF7",
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 1,
+    shadowRadius: 3,
     },
+    title: {
+        fontSize: 50,
+            color: '#0AFFF7',
+            textShadowColor: '#0AFFF7',
+            textShadowOffset: {width: 0, height: 0},
+            textShadowRadius: 20,
+            padding: 20,
+            justifyContent: 'center',
+      
+      },
 });
 
 export default GuessPage;

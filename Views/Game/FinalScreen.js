@@ -77,8 +77,9 @@ const FinalScreen = ({roomId, handleNavigation}) => {
     
     return (
         <View style={styles.container}>
+            <View style={styles.innerContainer}>
             <Text style={styles.title}>Original Prompt</Text>
-            <Text style={{fontSize: 36}}>{chain?.prompt}</Text>
+            <Text style={[styles.title, {fontSize: 36}]}>{chain?.prompt}</Text>
             <View style={styles.chainBoxContainer}>
                 <ScrollView contentContainerStyle={styles.scrollViewContent}>
                     {renderedChain.map((item) => {
@@ -89,6 +90,7 @@ const FinalScreen = ({roomId, handleNavigation}) => {
             <View style={styles.buttonContainer}>
                 <AppButton title="Next Chain" onPress={() => goToNextChain()} />
             </View>
+            </View>
         </View>
     );
 }
@@ -98,16 +100,34 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#121212',
         width: '100%'
     },
+    innerContainer: {
+        flex:0.95,
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        backgroundColor: '#121212',
+        shadowColor: "#0AFFF7",
+        shadowOffset: {width: 0, height: 0},
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        width: '95%',
+        borderRadius: 20,
+      },
     title: {
-        fontSize: 48,
-        marginTop: 20
-    },
+        fontSize: 40,
+            color: '#0AFFF7',
+            textShadowColor: '#0AFFF7',
+            textShadowOffset: {width: 0, height: 0},
+            textShadowRadius: 20,
+            padding: 20,
+            justifyContent: 'center',
+      
+      },
     chainBoxContainer: {
         marginTop: 50,
-        maxHeight: '60%',
+        maxHeight: '50%',
         width: '100%'
     },
     scrollViewContent: {

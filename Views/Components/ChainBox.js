@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Sound from 'react-native-sound';
 import RNFS from 'react-native-fs';
 
@@ -8,7 +8,7 @@ const ChainBox = (item) => {
 
     const path = RNFS.DocumentDirectoryPath + '/test.m4a';
 
-    useEffect(async() => {
+    const playAudio = async() => {
         if(item.item.s3Key) {
             await RNFS.downloadFile({
                 fromUrl: `https://echo-chain-api.herokuapp.com/recording/${item.item.id}`,
@@ -30,14 +30,19 @@ const ChainBox = (item) => {
                         );
                 })});
         }
+    }
+    useEffect(async() => {
+        playAudio();
     }, [])
 
 
    
   return (
-    <View style={styles.container}>
-        {item.item.title ? <Text>{item.item.title}</Text> : <Text>Audio</Text>}
-    </View>
+    <TouchableOpacity style ={styles.container} onPress={() => playAudio()}>
+    
+        {item.item.title ? <Text style={styles.text}>{item.item.title}</Text> : <Text style={styles.text}>Audio</Text>}
+    </TouchableOpacity>
+    
   );
 }
 
@@ -48,10 +53,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '90%',
         borderWidth: 1,
-        borderColor: 'black',
+        borderColor: '#0AFFF7',
         borderRadius: 10,
         margin: 10,
         height: 100,
+        shadowColor: '#0AFFF7',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+
+    },
+    text: {
+        color: '#0AFFF7',
+        fontSize: 20,
+        textShadowColor: '#0AFFF7',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 1,
+
     }
 });
 

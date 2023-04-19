@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import {
     Pusher,
     PusherMember,
     PusherChannel,
     PusherEvent,
   } from '@pusher/pusher-websocket-react-native';
+  import Hypnosis from './LoadingSymbol';
+  
 const LoadingPage = ({roomCode, handleNavigation}) => {
 
 
@@ -43,11 +45,23 @@ const LoadingPage = ({roomCode, handleNavigation}) => {
        
 }, []);
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white', width: '100%' }}>
-      <ActivityIndicator size="large" color="#0000ff" />
-      <Text style={{ marginTop: 10 }}>Loading...</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#121212', width: '100%' }}>
+
+      <ActivityIndicator size="large" color="#0AFFF7" />
+      <Text style={[styles.title, { marginTop: 10 }]}>Waiting For Other Players...</Text>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    color: '#0AFFF7',
+    textShadowColor: '#0AFFF7',
+    textShadowOffset: {width: 0, height: 0},
+    textShadowRadius: 20,
+    padding: 20
+
+},
+});
 export default LoadingPage;
